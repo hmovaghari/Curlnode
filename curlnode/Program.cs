@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Policy;
-using System.Text;
 
 namespace curlnode
 {
     internal class Program
     {
+        private static bool? isSecure;
+
         static void Main(string[] args)
         {
             //args = new string[] { "https://hmovaghari.ir/root/ip.js" };
@@ -26,10 +25,10 @@ namespace curlnode
             {
                 try
                 {
-                    var command = "/c curl -s " + args[0] + @"| node -e ""let data = ''; process.stdin.on('data', chunk => { data += chunk; }); process.stdin.on('end', () => { eval(data); }); """;
+                    var command = "/c curl -s -k " + args[0] + @"| node -e ""let data = ''; process.stdin.on('data', chunk => { data += chunk; }); process.stdin.on('end', () => { eval(data); }); """;
                     //Process.Start("CMD.exe", command);
 
-                    Process process= new Process();
+                    Process process = new Process();
                     process.StartInfo.UseShellExecute = false;
                     process.StartInfo.RedirectStandardOutput = true;
                     process.StartInfo.FileName = "CMD.exe";
